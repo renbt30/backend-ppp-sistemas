@@ -39,9 +39,10 @@ export class AuthServiceImpl implements AuthService {
         const isPasswordValid = await bcrypt.compare(clave, user.clave);
 
         const payload = { 
-            sub: user.id_usuario, 
+            sub: user.id_usuario,
             username: user.usuario,
             email: user.correo,
+            idrol: user.id_rol
         };
 
         if (isPasswordValid) {
@@ -63,9 +64,10 @@ export class AuthServiceImpl implements AuthService {
 
             // Refactorizar el payload con los valores de user
             const payload = {
-                sub: user.sub, 
+                sub: user.sub,
                 username: user.username,
                 email: user.email,
+                idrol: user.idrol
             };
 
             // Nuevos access_token y refresh_token
