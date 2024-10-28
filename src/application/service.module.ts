@@ -30,6 +30,8 @@ import { SolicitudContacto } from 'src/domain/entities/solicitud_contacto';
 import { SolicitudTipoContacto } from 'src/domain/entities/solicitud_tipocontacto';
 import { Solicitud } from 'src/domain/entities/solicitud';
 import { TipoDoc } from 'src/domain/entities/tipodoc';
+import { FirebaseStorageService } from './services/impl/firebase_storage.service';
+import { FirebaseConfig } from 'src/config/firebase.config';
 
 @Module({
   imports: [
@@ -47,7 +49,7 @@ import { TipoDoc } from 'src/domain/entities/tipodoc';
       SolicitudTipoContacto,
       Solicitud,
       TipoDoc,
-      Usuario
+      Usuario,
     ])
   ],
   providers: [
@@ -66,6 +68,8 @@ import { TipoDoc } from 'src/domain/entities/tipodoc';
     SolicitudServiceImpl,
     TipoDocServiceImpl,
     UsuarioServiceImpl,
+    FirebaseConfig,
+    FirebaseStorageService,
     JwtService
   ],
   exports: [
@@ -84,6 +88,7 @@ import { TipoDoc } from 'src/domain/entities/tipodoc';
     SolicitudServiceImpl,
     TipoDocServiceImpl,
     UsuarioServiceImpl,
+    FirebaseStorageService
   ],
 })
 export class ServiceModule {}

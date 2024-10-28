@@ -4,13 +4,15 @@ import { Repository, UpdateResult } from 'typeorm';
 import { PracticaDocumentosService } from '../interfaces/practica_documentos.service';
 import { PracticaDocumentos } from 'src/domain/entities/practica_documentos';
 import { CreatePracticaDocumentosDto, UpdatePracticaDocumentosDto } from 'src/presentation/dto/practica_documentos.dto';
+import { FirebaseStorageService } from './firebase_storage.service';
 
 @Injectable()
 export class PracticaDocumentosServiceImpl implements PracticaDocumentosService {
 
     constructor(
         @InjectRepository(PracticaDocumentos)
-        private readonly practicaDocumentosRepository: Repository<PracticaDocumentos>
+        private readonly practicaDocumentosRepository: Repository<PracticaDocumentos>,
+        private readonly fireStorageService: FirebaseStorageService
     ) {
     
     }
@@ -63,5 +65,5 @@ export class PracticaDocumentosServiceImpl implements PracticaDocumentosService 
 
         return updateResult;
     }
-    
+
 }
