@@ -8,7 +8,6 @@ export class UsuarioDto {
     nombre: string;
     correo: string;
     usuario: string;
-    clave: string;
     estado: string;
     dt_creacion: Date;
 }

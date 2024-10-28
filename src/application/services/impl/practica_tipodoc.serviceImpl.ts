@@ -34,7 +34,10 @@ export class PracticaTipoDocServiceImpl implements PracticaTipoDocService {
     }
 
     async createPracticaTipoDoc(createPracticaTipoDocDto: CreatePracticaTipoDocDto): Promise<PracticaTipoDoc> {
-        const practicaTipoDoc = await this.practicaTipoDocRepository.save(createPracticaTipoDocDto)
+        const practicaTipoDoc = await this.practicaTipoDocRepository.save({
+            ...createPracticaTipoDocDto,
+            estado: '1'
+        })
 
         return practicaTipoDoc;
     }

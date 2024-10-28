@@ -38,6 +38,7 @@ export class PracticaDocumentosServiceImpl implements PracticaDocumentosService 
     async createPracticaDocumentos(createPracticaDocumentosDto: CreatePracticaDocumentosDto): Promise<PracticaDocumentos> {
         const practicaDocumentos = await this.practicaDocumentosRepository.save({
             ...createPracticaDocumentosDto,
+            estado: '1',
             dt_reg: new Date()
         })
 

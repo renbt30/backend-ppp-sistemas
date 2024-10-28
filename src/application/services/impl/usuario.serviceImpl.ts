@@ -44,6 +44,7 @@ export class UsuarioServiceImpl implements UsuarioService {
             const usuario = await this.usuarioRepository.save({
                 ...createUsuarioDto,
                 clave: hashedPassword,
+                estado: '1',
                 dt_creacion: new Date()
             })
 

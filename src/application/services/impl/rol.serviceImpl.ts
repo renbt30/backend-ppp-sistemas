@@ -35,6 +35,7 @@ export class RolServiceImpl implements RolService {
     async createRol(createRolDto: CreateRolDto): Promise<Rol> {
         const rol = await this.rolRepository.save({
             ...createRolDto,
+            estado: '1',
             dt_creacion: new Date()
         })
 

@@ -34,7 +34,10 @@ export class SolicitudTipoContactoServiceImpl implements SolicitudTipoContactoSe
     }
 
     async createSolicitudTipoContacto(createSolicitudTipoContactoDto: CreateSolicitudTipoContactoDto): Promise<SolicitudTipoContacto> {
-        const solicitudTipoContacto = await this.solicitudTipoContactoRepository.save(createSolicitudTipoContactoDto)
+        const solicitudTipoContacto = await this.solicitudTipoContactoRepository.save({
+            ...createSolicitudTipoContactoDto,
+            estado: '1'
+        })
 
         return solicitudTipoContacto;
     }

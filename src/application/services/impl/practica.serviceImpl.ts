@@ -36,7 +36,7 @@ export class PracticaServiceImpl implements PracticaService {
     async createPractica(createPracticaDto: CreatePracticaDto): Promise<Practica> {
         const practica = await this.practicaRepository.save({
             ...createPracticaDto,
-            dt_creacion: new Date()
+            dt_mov: new Date()
         })
 
         return practica;

@@ -1,13 +1,13 @@
 import { PartialType } from "@nestjs/mapped-types";
 
 export class PracticaTipoDocDto {
-    id_prclinea: number;
-    nm_prclinea: string;
+    id_prctipodoc: number;
+    nm_prctipodoc: string;
     estado: string;
 }
 
 export class CreatePracticaTipoDocDto {
-    nm_prclinea: string;
+    nm_prctipodoc: string;
 }
 
 export class UpdatePracticaTipoDocDto extends PartialType(CreatePracticaTipoDocDto) { }
