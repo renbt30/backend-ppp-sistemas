@@ -8,7 +8,6 @@ export class PracticaTipoDocDto {
 
 export class CreatePracticaTipoDocDto {
     nm_prclinea: string;
-    estado: string;
 }
 
 export class UpdatePracticaTipoDocDto extends PartialType(CreatePracticaTipoDocDto) { }

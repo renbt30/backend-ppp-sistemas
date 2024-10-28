@@ -9,6 +9,7 @@ export class PracticaHistoricoDto {
 }
 
 export class CreatePracticaHistoricoDto {
+    id_practica: number;
     id_usuariomov: number;
     id_prcestado: number;
     observacion: string;

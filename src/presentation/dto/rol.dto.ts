@@ -11,7 +11,6 @@ export class RolDto {
 export class CreateRolDto {
     nm_rol: string;
     tipo_rol: string;
-    estado: string;
 }
 
 export class UpdateRolDto extends PartialType(CreateRolDto) {}

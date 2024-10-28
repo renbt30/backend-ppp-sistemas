@@ -17,7 +17,6 @@ export class CreatePracticaDocumentosDto {
     id_prctipodoc: number;
     file_name: string;
     file_link: string;
-    estado: string;
     observacion: string;
     id_usuariorev: number;
 }

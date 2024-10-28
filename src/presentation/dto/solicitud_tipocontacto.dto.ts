@@ -8,7 +8,6 @@ export class SolicitudTipoContactoDto {
 
 export class CreateSolicitudTipoContactoDto {
     nm_tipocontacto: string;
-    estado: string;
 }
 
 export class UpdateSolicitudTipoContactoDto extends PartialType(CreateSolicitudTipoContactoDto) {}

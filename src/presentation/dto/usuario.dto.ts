@@ -21,7 +21,6 @@ export class CreateUsuarioDto {
     correo: string;
     usuario: string;
     clave: string;
-    estado: string;
 }
 
 export class UpdateUsuarioDto extends PartialType(CreateUsuarioDto) {}
