@@ -8,4 +8,5 @@ export interface SolicitudService {
     createSolicitud(createSolicitudDto: CreateSolicitudDto): Promise<Solicitud>;
     updateSolicitud(id: number, updateSolicitudDto: UpdateSolicitudDto): Promise<UpdateResult>;
     deleteSolicitud(id: number): Promise<UpdateResult>;
+    updateEstadoSolicitud(id: number, estado: string): Promise<UpdateResult>;
 }

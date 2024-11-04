@@ -34,5 +34,10 @@ export class SolicitudController {
     delete(@Param('id') id: number) {
         return this.solicitudService.deleteSolicitud(+id);
     }
+
+    @Patch('/update-estado')
+    updateEstado(@Body('id') id: number, @Body('estado') estado: string) {
+        return this.solicitudService.updateEstadoSolicitud(id, estado);
+    }
     
 }

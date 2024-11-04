@@ -63,5 +63,15 @@ export class SolicitudServiceImpl implements SolicitudService {
 
         return updateResult;
     }
+
+    async updateEstadoSolicitud(id: number, estado: string): Promise<UpdateResult> {
+        const updateResult = await this.solicitudRepository.update(id, { estado: estado });
+
+        if (updateResult.affected === 0) {
+            throw new BadRequestException(`No se encontró la solicitud`);
+        }
+
+        return updateResult;
+    }
     
 }
