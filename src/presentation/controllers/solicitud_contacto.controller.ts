@@ -16,7 +16,7 @@ export class SolicitudContactoController {
     }
 
     @Get(':id')
-    getSolicitudContactoById(@Param('id') id: string) {
+    getSolicitudContactoById(@Param('id') id: number) {
         return this.solicitudContactoService.getSolicitudContactoById(+id);
     }
 
@@ -26,12 +26,12 @@ export class SolicitudContactoController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateSolicitudContactoDto: UpdateSolicitudContactoDto) {
+    update(@Param('id') id: number, @Body() updateSolicitudContactoDto: UpdateSolicitudContactoDto) {
         return this.solicitudContactoService.updateSolicitudContacto(+id, updateSolicitudContactoDto);
     }
 
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.solicitudContactoService.deleteSolicitudContacto(+id);
     }
     

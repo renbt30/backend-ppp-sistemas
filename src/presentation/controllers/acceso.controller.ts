@@ -16,7 +16,7 @@ export class AccesoController {
     }
 
     @Get(':id')
-    getAccesoById(@Param('id') id: string) {
+    getAccesoById(@Param('id') id: number) {
         return this.accesoService.getAccesoById(+id);
     }
 
@@ -26,12 +26,12 @@ export class AccesoController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateAccesoDto: UpdateAccesoDto) {
+    update(@Param('id') id: number, @Body() updateAccesoDto: UpdateAccesoDto) {
         return this.accesoService.updateAcceso(+id, updateAccesoDto);
     }
     
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.accesoService.deleteAcceso(+id);
     }
     

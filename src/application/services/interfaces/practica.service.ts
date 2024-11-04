@@ -8,4 +8,5 @@ export interface PracticaService {
     createPractica(createPracticaDto: CreatePracticaDto): Promise<Practica>;
     updatePractica(id: number, updatePracticaDto: UpdatePracticaDto): Promise<UpdateResult>;
     deletePractica(id: number): Promise<UpdateResult>;
+    updateEstadoPractica(id: number, estado: string): Promise<UpdateResult>;
 }

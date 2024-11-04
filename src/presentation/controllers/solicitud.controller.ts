@@ -16,7 +16,7 @@ export class SolicitudController {
     }
 
     @Get(':id')
-    getSolicitudById(@Param('id') id: string) {
+    getSolicitudById(@Param('id') id: number) {
         return this.solicitudService.getSolicitudById(+id);
     }
 
@@ -26,12 +26,12 @@ export class SolicitudController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateSolicitudDto: UpdateSolicitudDto) {
+    update(@Param('id') id: number, @Body() updateSolicitudDto: UpdateSolicitudDto) {
         return this.solicitudService.updateSolicitud(+id, updateSolicitudDto);
     }
 
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.solicitudService.deleteSolicitud(+id);
     }
     

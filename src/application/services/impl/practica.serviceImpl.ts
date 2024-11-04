@@ -55,5 +55,15 @@ export class PracticaServiceImpl implements PracticaService {
     async deletePractica(id: number): Promise<UpdateResult> {
         return null;
     }
+
+    async updateEstadoPractica(id: number, estado: string): Promise<UpdateResult> {
+        const updateResult = await this.practicaRepository.update(id, new Practica());
+
+        if (updateResult.affected === 0) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return updateResult;
+    }
     
 }

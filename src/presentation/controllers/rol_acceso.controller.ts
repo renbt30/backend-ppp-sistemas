@@ -16,7 +16,7 @@ export class RolAccesoController {
     }
 
     @Get(':id')
-    getRolAccesoByRolId(@Param('id') id: string) {
+    getRolAccesoByRolId(@Param('id') id: number) {
         return this.rolAccesoService.getRolAccesoByRolId(+id);
     }
 
@@ -26,12 +26,12 @@ export class RolAccesoController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateRolAccesoDto: UpdateRolAccesoDto) {
+    update(@Param('id') id: number, @Body() updateRolAccesoDto: UpdateRolAccesoDto) {
         return this.rolAccesoService.updateRolAcceso(+id, updateRolAccesoDto);
     }
 
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.rolAccesoService.deleteRolAcceso(+id);
     }
     

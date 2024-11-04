@@ -16,7 +16,7 @@ export class UsuarioController {
     }
 
     @Get(':id')
-    getUsuarioById(@Param('id') id: string) {
+    getUsuarioById(@Param('id') id: number) {
         return this.tipoDocService.getUsuarioById(+id);
     }
 
@@ -26,12 +26,12 @@ export class UsuarioController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
+    update(@Param('id') id: number, @Body() updateUsuarioDto: UpdateUsuarioDto) {
         return this.tipoDocService.updateUsuario(+id, updateUsuarioDto);
     }
 
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.tipoDocService.deleteUsuario(+id);
     }
     

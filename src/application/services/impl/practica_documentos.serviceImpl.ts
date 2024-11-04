@@ -35,9 +35,14 @@ export class PracticaDocumentosServiceImpl implements PracticaDocumentosService 
         return practicaDocumentos;
     }
 
-    async createPracticaDocumentos(createPracticaDocumentosDto: CreatePracticaDocumentosDto): Promise<PracticaDocumentos> {
+    async createPracticaDocumentos(createPracticaDocumentosDto: CreatePracticaDocumentosDto, file: Express.Multer.File): Promise<PracticaDocumentos> {
+
+        const { fileName, fileLink } = await this.fireStorageService.uploadFile(file);
+
         const practicaDocumentos = await this.practicaDocumentosRepository.save({
             ...createPracticaDocumentosDto,
+            file_name: fileName,
+            file_link: fileLink,
             estado: '1',
             dt_reg: new Date()
         })

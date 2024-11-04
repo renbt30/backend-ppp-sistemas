@@ -16,7 +16,7 @@ export class PracticaHistoricoController {
     }
 
     @Get(':id')
-    getPracticaHistoricoByPracticaId(@Param('id') id: string) {
+    getPracticaHistoricoByPracticaId(@Param('id') id: number) {
         return this.practicaHistoricoService.getPracticaHistoricoByPracticaId(+id);
     }
 
@@ -26,12 +26,12 @@ export class PracticaHistoricoController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updatePracticaHistoricoDto: UpdatePracticaHistoricoDto) {
+    update(@Param('id') id: number, @Body() updatePracticaHistoricoDto: UpdatePracticaHistoricoDto) {
         return this.practicaHistoricoService.updatePracticaHistorico(+id, updatePracticaHistoricoDto);
     }
     
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.practicaHistoricoService.deletePracticaHistorico(+id);
     }
     

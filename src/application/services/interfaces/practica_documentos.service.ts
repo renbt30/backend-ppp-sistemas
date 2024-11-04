@@ -5,7 +5,7 @@ import { UpdateResult } from "typeorm";
 export interface PracticaDocumentosService {
     getAllPracticaDocumentos(): Promise<PracticaDocumentos[]>;
     getPracticaDocumentosById(id: number): Promise<PracticaDocumentos>;
-    createPracticaDocumentos(createPracticaDocumentosDto: CreatePracticaDocumentosDto): Promise<PracticaDocumentos>;
+    createPracticaDocumentos(createPracticaDocumentosDto: CreatePracticaDocumentosDto, file: Express.Multer.File): Promise<PracticaDocumentos>;
     updatePracticaDocumentos(id: number, updatePracticaDocumentosDto: UpdatePracticaDocumentosDto): Promise<UpdateResult>;
     deletePracticaDocumentos(id: number): Promise<UpdateResult>;
 }

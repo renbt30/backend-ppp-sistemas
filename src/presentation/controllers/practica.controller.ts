@@ -16,7 +16,7 @@ export class PracticaController {
     }
 
     @Get(':id')
-    getPracticaById(@Param('id') id: string) {
+    getPracticaById(@Param('id') id: number) {
         return this.practicaService.getPracticaById(+id);
     }
 
@@ -26,12 +26,12 @@ export class PracticaController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updatePracticaDto: UpdatePracticaDto) {
+    update(@Param('id') id: number, @Body() updatePracticaDto: UpdatePracticaDto) {
         return this.practicaService.updatePractica(+id, updatePracticaDto);
     }
     
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.practicaService.deletePractica(+id);
     }
     

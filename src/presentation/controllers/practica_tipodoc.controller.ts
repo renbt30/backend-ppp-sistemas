@@ -16,7 +16,7 @@ export class PracticaTipoDocController {
     }
 
     @Get(':id')
-    getPracticaTipoDocById(@Param('id') id: string) {
+    getPracticaTipoDocById(@Param('id') id: number) {
         return this.practicaTipoDocService.getPracticaTipoDocById(+id);
     }
 
@@ -26,12 +26,12 @@ export class PracticaTipoDocController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updatePracticaTipoDocDto: UpdatePracticaTipoDocDto) {
+    update(@Param('id') id: number, @Body() updatePracticaTipoDocDto: UpdatePracticaTipoDocDto) {
         return this.practicaTipoDocService.updatePracticaTipoDoc(+id, updatePracticaTipoDocDto);
     }
     
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.practicaTipoDocService.deletePracticaTipoDoc(+id);
     }
     

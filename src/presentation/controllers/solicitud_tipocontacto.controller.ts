@@ -16,7 +16,7 @@ export class SolicitudTipoContactoController {
     }
 
     @Get(':id')
-    getSolicitudTipoContactoById(@Param('id') id: string) {
+    getSolicitudTipoContactoById(@Param('id') id: number) {
         return this.solicitudTipoContactoService.getSolicitudTipoContactoById(+id);
     }
 
@@ -26,12 +26,12 @@ export class SolicitudTipoContactoController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateSolicitudTipoContactoDto: UpdateSolicitudTipoContactoDto) {
+    update(@Param('id') id: number, @Body() updateSolicitudTipoContactoDto: UpdateSolicitudTipoContactoDto) {
         return this.solicitudTipoContactoService.updateSolicitudTipoContacto(+id, updateSolicitudTipoContactoDto);
     }
 
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.solicitudTipoContactoService.deleteSolicitudTipoContacto(+id);
     }
     

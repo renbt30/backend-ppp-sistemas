@@ -16,7 +16,7 @@ export class TipoDocController {
     }
 
     @Get(':id')
-    getTipoDocById(@Param('id') id: string) {
+    getTipoDocById(@Param('id') id: number) {
         return this.tipoDocService.getTipoDocById(+id);
     }
 
@@ -26,12 +26,12 @@ export class TipoDocController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateTipoDocDto: UpdateTipoDocDto) {
+    update(@Param('id') id: number, @Body() updateTipoDocDto: UpdateTipoDocDto) {
         return this.tipoDocService.updateTipoDoc(+id, updateTipoDocDto);
     }
 
     @Patch('/delete/:id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: number) {
         return this.tipoDocService.deleteTipoDoc(+id);
     }
     
