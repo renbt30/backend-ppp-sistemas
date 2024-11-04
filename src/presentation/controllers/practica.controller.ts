@@ -34,5 +34,10 @@ export class PracticaController {
     delete(@Param('id') id: number) {
         return this.practicaService.deletePractica(+id);
     }
+
+    @Patch('/update-estado')
+    updateEstado(@Body('id') id: number, @Body('estado') estado: number) {
+        return this.practicaService.updateEstadoPractica(id, estado);
+    }
     
 }

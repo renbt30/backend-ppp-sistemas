@@ -56,8 +56,8 @@ export class PracticaServiceImpl implements PracticaService {
         return null;
     }
 
-    async updateEstadoPractica(id: number, estado: string): Promise<UpdateResult> {
-        const updateResult = await this.practicaRepository.update(id, new Practica());
+    async updateEstadoPractica(id: number, estado: number): Promise<UpdateResult> {
+        const updateResult = await this.practicaRepository.update(id, { id_prcestado: estado });
 
         if (updateResult.affected === 0) {
             throw new BadRequestException(`No se encontró la practica`);
