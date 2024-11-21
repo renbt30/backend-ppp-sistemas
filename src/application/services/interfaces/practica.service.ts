@@ -13,4 +13,5 @@ export interface PracticaService {
     updatePractica(id: number, updatePracticaDto: UpdatePracticaDto): Promise<UpdateResult>;
     deletePractica(id: number): Promise<UpdateResult>;
     updateEstadoPractica(id: number, estado: number): Promise<UpdateResult>;
+    getMetricas(): Promise<Object>
 }

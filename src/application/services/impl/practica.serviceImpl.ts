@@ -54,11 +54,13 @@ export class PracticaServiceImpl implements PracticaService {
 
     async getPracticasByPostulanteId(id: number): Promise<Object[]> {
         const result = await this.practicaRepository.query(
-            `Select p.*, pe.nm_prcestado AS estado_practica, u.nombre
-            from practica p
-            inner join solicitud s on s.id_solicitud = p.id_solicitud
-            inner join usuario u on s.id_postulante = u.id_usuario
-            inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
+            `Select p.*, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica
+                from practica p
+                inner join solicitud s on s.id_solicitud = p.id_solicitud
+                inner join usuario u on s.id_postulante = u.id_usuario
+                inner join usuario us on p.id_superv = us.id_usuario
+                inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
+                inner join practica_linea pl on pl.id_prclinea = p.id_prclinea
             where s.id_postulante = ?;`,
             [id]
         );
@@ -147,6 +149,27 @@ export class PracticaServiceImpl implements PracticaService {
         }
 
         return updateResult;
+    }
+
+    async getMetricas(): Promise<Object> {
+        const result = await this.practicaRepository.query(
+            `SELECT 
+                (SELECT COUNT(*) 
+                FROM solicitud 
+                WHERE estado IN (0, 1)) AS numero_solicitudes,
+                (SELECT COUNT(*) 
+                FROM practica 
+                WHERE id_prclinea IN (1, 2, 3, 4)) AS numero_practicantes,
+                (SELECT COUNT(*) 
+                FROM practica 
+                WHERE id_prclinea = 5) AS numero_practicantes;`
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return result;
     }
     
 }

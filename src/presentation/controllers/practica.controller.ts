@@ -54,5 +54,10 @@ export class PracticaController {
     updateEstado(@Body('id') id: number, @Body('estado') estado: number) {
         return this.practicaService.updateEstadoPractica(id, estado);
     }
+
+    @Get('/metricas')
+    getMetricas() {
+        return this.practicaService.getMetricas();
+    }
     
 }
