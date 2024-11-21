@@ -22,6 +22,9 @@ export class UsuarioServiceImpl implements UsuarioService {
 
     async getUsuarioById(id: number): Promise<Usuario> {
         const usuario = await this.usuarioRepository.findOne({
+            select: [
+                'id_usuario','nombre','correo', 'usuario', 'id_tipodoc','num_doc','dt_creacion','id_rol','estado'
+            ],
             where: [{
                 id_usuario: id
             }]
@@ -36,6 +39,9 @@ export class UsuarioServiceImpl implements UsuarioService {
 
     async getUsuariosByRolId(id: number): Promise<Usuario[]> {
         const usuario = await this.usuarioRepository.find({
+            select: [
+                'id_usuario','nombre','correo','id_tipodoc','num_doc','dt_creacion','id_rol','estado'
+            ],
             where: [{
                 id_rol: id
             }]
