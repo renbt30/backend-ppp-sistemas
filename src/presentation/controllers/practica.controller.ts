@@ -56,12 +56,12 @@ export class PracticaController {
     }
 
     @Patch('/update-estado')
-    updateEstado(@Body('id') id: number, @Body('estado') estado: number) {
+    updateEstado(@Body('id_practica') id: number, @Body('estado_practica') estado: number) {
         return this.practicaService.updateEstadoPractica(id, estado);
     }
 
     @Patch('/update-horas-nota')
-    updateHorasAndNotaPractica(@Body('id') id: number, @Body('horas') horas: number, @Body('nota') nota: number) {
+    updateHorasAndNotaPractica(@Body('id_practica') id: number, @Body('horas') horas: number, @Body('nota') nota: number) {
         return this.practicaService.updateHorasAndNotaPractica(id, horas, nota);
     }
 }

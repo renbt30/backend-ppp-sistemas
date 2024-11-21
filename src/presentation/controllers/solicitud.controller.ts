@@ -51,12 +51,12 @@ export class SolicitudController {
     }
 
     @Patch('/update-estado')
-    updateEstado(@Body('id') id: number, @Body('estado') estado: string) {
+    updateEstado(@Body('id_solicitud') id: number, @Body('estado_solicitud') estado: string) {
         return this.solicitudService.updateEstadoSolicitud(id, estado);
     }
 
-    @Patch('/add/observacion/:id')
-    addObservacion(@Param('id') id: number, @Body('observacion') observacion: string) {
+    @Patch('/add/observacion/:id_solicitud')
+    addObservacion(@Param('id_solicitud') id: number, @Body('observacion') observacion: string) {
         return this.solicitudService.addObservacion(id, observacion);
     }
     

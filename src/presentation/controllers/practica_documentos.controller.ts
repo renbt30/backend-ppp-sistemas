@@ -38,12 +38,12 @@ export class PracticaDocumentosController {
     }
 
     @Patch('/update-estado')
-    updateEstado(@Body('id') id: number, @Body('estado') estado: string) {
+    updateEstado(@Body('id_practica_doc') id: number, @Body('estado_practica_doc') estado: string) {
         return this.practicaDocumentosService.updateEstadoDocumento(id, estado);
     }
 
-    @Patch('/add/observacion/:id')
-    addObservacion(@Param('id') id: number, @Body('observacion') observacion: string) {
+    @Patch('/add/observacion/:id_practica_doc')
+    addObservacion(@Param('id_practica_doc') id: number, @Body('observacion') observacion: string) {
         return this.practicaDocumentosService.addObservacion(+id, observacion);
     }
 
