@@ -37,7 +37,6 @@ export class PracticaController {
 
     @Get('/estado/:estado')
     getPracticasByEstado(@Param('estado') estado: string) {
-        console.log('Holaaaa');
         return this.practicaService.getPracticasByEstado(estado);
     }
 

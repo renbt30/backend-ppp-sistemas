@@ -37,4 +37,14 @@ export class PracticaDocumentosController {
         return this.practicaDocumentosService.deletePracticaDocumentos(+id);
     }
 
+    @Patch('/update-estado')
+    updateEstado(@Body('id') id: number, @Body('estado') estado: string) {
+        return this.practicaDocumentosService.updateEstadoDocumento(id, estado);
+    }
+
+    @Patch('/add/observacion/:id')
+    addObservacion(@Param('id') id: number, @Body('observacion') observacion: string) {
+        return this.practicaDocumentosService.addObservacion(+id, observacion);
+    }
+
 }

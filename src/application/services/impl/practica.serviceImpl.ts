@@ -171,8 +171,6 @@ export class PracticaServiceImpl implements PracticaService {
 
     async getMetricas(): Promise<Object> {
 
-        console.log('Holaaaaaa')
-
         // Llamar al procedimiento almacenado
         const result = await this.practicaRepository.query(`
             CALL GetMetricas(@numero_solicitudes, @numero_practicantes, @numero_practicas_terminadas);

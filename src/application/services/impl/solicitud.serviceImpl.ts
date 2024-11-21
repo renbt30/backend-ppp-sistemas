@@ -174,5 +174,15 @@ export class SolicitudServiceImpl implements SolicitudService {
 
         return updateResult;
     }
+
+    async addObservacion(id: number, observacion: string): Promise<UpdateResult> {
+        const updateResult = await this.solicitudRepository.update(id, { observacion: observacion });
+
+        if (updateResult.affected === 0) {
+            throw new BadRequestException(`No se encontró la solicitud`);
+        }
+
+        return updateResult;
+    }
     
 }

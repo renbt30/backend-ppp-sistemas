@@ -8,4 +8,6 @@ export interface PracticaDocumentosService {
     createPracticaDocumentos(createPracticaDocumentosDto: CreatePracticaDocumentosDto, file: Express.Multer.File): Promise<PracticaDocumentos>;
     updatePracticaDocumentos(id: number, updatePracticaDocumentosDto: UpdatePracticaDocumentosDto): Promise<UpdateResult>;
     deletePracticaDocumentos(id: number): Promise<UpdateResult>;
+    updateEstadoDocumento(id: number, estado: string): Promise<UpdateResult>;
+    addObservacion(id: number, observacion: string): Promise<UpdateResult>;
 }

@@ -54,5 +54,10 @@ export class SolicitudController {
     updateEstado(@Body('id') id: number, @Body('estado') estado: string) {
         return this.solicitudService.updateEstadoSolicitud(id, estado);
     }
+
+    @Patch('/add/observacion/:id')
+    addObservacion(@Param('id') id: number, @Body('observacion') observacion: string) {
+        return this.solicitudService.addObservacion(id, observacion);
+    }
     
 }

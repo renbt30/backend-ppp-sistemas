@@ -72,4 +72,24 @@ export class PracticaDocumentosServiceImpl implements PracticaDocumentosService 
         return updateResult;
     }
 
+    async updateEstadoDocumento(id: number, estado: string): Promise<UpdateResult> {
+        const updateResult = await this.practicaDocumentosRepository.update(id, { estado: estado });
+
+        if (updateResult.affected === 0) {
+            throw new BadRequestException(`No se encontró el documento de la práctica`);
+        }
+
+        return updateResult;
+    }
+
+    async addObservacion(id: number, observacion: string): Promise<UpdateResult> {
+        const updateResult = await this.practicaDocumentosRepository.update(id, { observacion: observacion });
+
+        if (updateResult.affected === 0) {
+            throw new BadRequestException(`No se encontró el documento de la práctica`);
+        }
+
+        return updateResult;
+    }
+
 }
