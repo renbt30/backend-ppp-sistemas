@@ -54,14 +54,14 @@ export class PracticaServiceImpl implements PracticaService {
 
     async getPracticasByPostulanteId(id: number): Promise<Object[]> {
         const result = await this.practicaRepository.query(
-            `Select p.*, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica
+            `Select p.*, s.dt_prcinicio, s.dt_prcfin, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica
                 from practica p
                 inner join solicitud s on s.id_solicitud = p.id_solicitud
                 inner join usuario u on s.id_postulante = u.id_usuario
                 inner join usuario us on p.id_superv = us.id_usuario
                 inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
                 inner join practica_linea pl on pl.id_prclinea = p.id_prclinea
-            where s.id_postulante = ?;`,
+            where s.id_postulante = ?`,
             [id]
         );
 
@@ -100,7 +100,7 @@ export class PracticaServiceImpl implements PracticaService {
 
     async getPracticasByEstado(estado: string): Promise<Object[]> {
         const result = await this.practicaRepository.query(
-            `Select p.*, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica, u.nombre as postulante
+            `Select p.*, s.dt_prcinicio, s.dt_prcfin, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica, u.nombre as postulante
                 from practica p
                 inner join solicitud s on s.id_solicitud = p.id_solicitud
                 inner join usuario u on s.id_postulante = u.id_usuario
