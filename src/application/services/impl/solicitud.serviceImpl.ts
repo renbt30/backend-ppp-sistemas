@@ -136,7 +136,8 @@ export class SolicitudServiceImpl implements SolicitudService {
     async createSolicitud(createSolicitudDto: CreateSolicitudDto): Promise<Solicitud> {
         const solicitud = await this.solicitudRepository.save({
             ...createSolicitudDto,
-            dt_creacion: new Date()
+            dt_creacion: new Date(),
+            estado: '0',
         })
 
         return solicitud;

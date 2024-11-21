@@ -23,7 +23,6 @@ export class CreateSolicitudDto {
     dt_prcinicio: Date;
     dt_prcfin: Date;
     desc_actividades: string;
-    estado: string;
     id_usuariorev: number;
     observacion: string;
 }
