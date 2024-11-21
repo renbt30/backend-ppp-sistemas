@@ -10,7 +10,7 @@ export class PracticaServiceImpl implements PracticaService {
 
     constructor(
         @InjectRepository(Practica)
-        private readonly practicaRepository: Repository<Practica>
+        private readonly practicaRepository: Repository<Practica>,
     ) {
     
     }
@@ -54,14 +54,21 @@ export class PracticaServiceImpl implements PracticaService {
 
     async getPracticasByPostulanteId(id: number): Promise<Object[]> {
         const result = await this.practicaRepository.query(
-            `Select p.*, s.dt_prcinicio, s.dt_prcfin, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica
-                from practica p
-                inner join solicitud s on s.id_solicitud = p.id_solicitud
-                inner join usuario u on s.id_postulante = u.id_usuario
-                inner join usuario us on p.id_superv = us.id_usuario
-                inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
-                inner join practica_linea pl on pl.id_prclinea = p.id_prclinea
-            where s.id_postulante = ?`,
+            `Select p.*,
+                s.empresa_ruc,
+                s.empresa_nombre,
+                s.dt_prcinicio, 
+                s.dt_prcfin,
+                pl.nm_prclinea as linea, 
+                us.nombre as supervisor, 
+                pe.nm_prcestado AS estado_practica
+                    from practica p
+                    inner join solicitud s on s.id_solicitud = p.id_solicitud
+                    inner join usuario u on s.id_postulante = u.id_usuario
+                    inner join usuario us on p.id_superv = us.id_usuario
+                    inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
+                    inner join practica_linea pl on pl.id_prclinea = p.id_prclinea
+                where s.id_postulante = ?`,
             [id]
         );
 
@@ -82,11 +89,14 @@ export class PracticaServiceImpl implements PracticaService {
                     WHEN 2 THEN 'Revisado'
                     WHEN 3 THEN 'Observado'
                     WHEN 4 THEN 'Rechazado'
-                END AS estado_documento
+                END AS estado_documento,
+                p.id_prcestado,
+                pe.nm_prcestado AS estado_practica
             from practica_documentos pd
             inner join practica p on p.id_practica = pd.id_practica
             inner join solicitud s on s.id_solicitud = p.id_solicitud
             inner join practica_tipodoc pt on pt.id_prctipodoc = pd.id_prctipodoc
+            inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
             where p.id_practica = ?;`,
             [id]
         );
@@ -100,7 +110,15 @@ export class PracticaServiceImpl implements PracticaService {
 
     async getPracticasByEstado(estado: string): Promise<Object[]> {
         const result = await this.practicaRepository.query(
-            `Select p.*, s.dt_prcinicio, s.dt_prcfin, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica, u.nombre as postulante
+            `Select p.*,
+                s.empresa_ruc,
+                s.empresa_nombre,
+                s.dt_prcinicio, 
+                s.dt_prcfin, 
+                pl.nm_prclinea as linea, 
+                us.nombre as supervisor, 
+                pe.nm_prcestado AS estado_practica,
+                u.nombre as postulante
                 from practica p
                 inner join solicitud s on s.id_solicitud = p.id_solicitud
                 inner join usuario u on s.id_postulante = u.id_usuario
@@ -152,24 +170,21 @@ export class PracticaServiceImpl implements PracticaService {
     }
 
     async getMetricas(): Promise<Object> {
+
+        console.log('Holaaaaaa')
+
         const result = await this.practicaRepository.query(
-            `SELECT 
-                (SELECT COUNT(*) 
-                FROM solicitud 
-                WHERE estado IN (0, 1)) AS numero_solicitudes,
-                (SELECT COUNT(*) 
-                FROM practica 
-                WHERE id_prclinea IN (1, 2, 3, 4)) AS numero_practicantes,
-                (SELECT COUNT(*) 
-                FROM practica 
-                WHERE id_prclinea = 5) AS numero_practicantes;`
+            `CALL GetMetricas();`
         );
 
-        if (!result) {
+
+        if (!result || result.length === 0) {
             throw new BadRequestException(`No se encontró la practica`);
         }
 
-        return result;
+        console.log(result);
+
+        return result[0][0];
     }
     
 }

@@ -49,7 +49,7 @@ import { FirebaseConfig } from 'src/config/firebase.config';
       SolicitudTipoContacto,
       Solicitud,
       TipoDoc,
-      Usuario,
+      Usuario
     ])
   ],
   providers: [

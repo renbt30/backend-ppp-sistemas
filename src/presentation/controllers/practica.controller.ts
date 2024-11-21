@@ -35,6 +35,12 @@ export class PracticaController {
         return this.practicaService.getPracticasByEstado(estado);
     }
 
+    @Get('/metric')
+    getMetricas() {
+        console.log('Holaaaa');
+        return this.practicaService.getMetricas();
+    }
+
     @Post()
     create(@Body() createPracticaDto: CreatePracticaDto) {
         return this.practicaService.createPractica(createPracticaDto);
@@ -54,10 +60,4 @@ export class PracticaController {
     updateEstado(@Body('id') id: number, @Body('estado') estado: number) {
         return this.practicaService.updateEstadoPractica(id, estado);
     }
-
-    @Get('/metricas')
-    getMetricas() {
-        return this.practicaService.getMetricas();
-    }
-    
 }
