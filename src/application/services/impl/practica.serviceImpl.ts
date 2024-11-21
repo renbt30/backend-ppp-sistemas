@@ -33,7 +33,8 @@ export class PracticaServiceImpl implements PracticaService {
         return practica;
     }
 
-    async getPracticaByPostulantes(): Promise<Object[]> {
+    /*
+    async getPracticasByPostulantes(): Promise<Object[]> {
         const result = await this.practicaRepository.query(
             `Select p.*, pe.nm_prcestado AS estado_practica, u.nombre
             from practica p
@@ -48,8 +49,10 @@ export class PracticaServiceImpl implements PracticaService {
 
         return result;
     }
+    */
+    
 
-    async getPracticaByPostulanteId(id: number): Promise<Object[]> {
+    async getPracticasByPostulanteId(id: number): Promise<Object[]> {
         const result = await this.practicaRepository.query(
             `Select p.*, pe.nm_prcestado AS estado_practica, u.nombre
             from practica p
@@ -58,6 +61,52 @@ export class PracticaServiceImpl implements PracticaService {
             inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
             where s.id_postulante = ?;`,
             [id]
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return result;
+    }
+
+
+    async getDetallePracticaByPracticaId(id: number): Promise<Object> {
+        const result = await this.practicaRepository.query(
+            `Select pd.*,
+                pt.nm_prctipodoc AS tipo_documento,
+                CASE pd.estado
+                    WHEN 1 THEN 'Subido'
+                    WHEN 2 THEN 'Revisado'
+                    WHEN 3 THEN 'Observado'
+                    WHEN 4 THEN 'Rechazado'
+                END AS estado_documento
+            from practica_documentos pd
+            inner join practica p on p.id_practica = pd.id_practica
+            inner join solicitud s on s.id_solicitud = p.id_solicitud
+            inner join practica_tipodoc pt on pt.id_prctipodoc = pd.id_prctipodoc
+            where p.id_practica = ?;`,
+            [id]
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return result;
+    }
+
+    async getPracticasByEstado(estado: string): Promise<Object[]> {
+        const result = await this.practicaRepository.query(
+            `Select p.*, pl.nm_prclinea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica, u.nombre as postulante
+                from practica p
+                inner join solicitud s on s.id_solicitud = p.id_solicitud
+                inner join usuario u on s.id_postulante = u.id_usuario
+                inner join usuario us on p.id_superv = us.id_usuario
+                inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
+                inner join practica_linea pl on pl.id_prclinea = p.id_prclinea
+                where pe.id_prcestado = ?;`,
+            [estado]
         );
 
         if (!result) {

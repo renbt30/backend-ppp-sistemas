@@ -20,6 +20,21 @@ export class PracticaController {
         return this.practicaService.getPracticaById(+id);
     }
 
+    @Get('/postulante/:id')
+    getPracticasByPostulanteId(@Param('id') id: number) {
+        return this.practicaService.getPracticasByPostulanteId(+id);
+    }
+
+    @Get('/detalle/:id')
+    getDetallePracticaByPracticaId(@Param('id') id: number) {
+        return this.practicaService.getDetallePracticaByPracticaId(+id);
+    }
+
+    @Get('/estado/:estado')
+    getPracticasByEstado(@Param('estado') estado: string) {
+        return this.practicaService.getPracticasByEstado(estado);
+    }
+
     @Post()
     create(@Body() createPracticaDto: CreatePracticaDto) {
         return this.practicaService.createPractica(createPracticaDto);
