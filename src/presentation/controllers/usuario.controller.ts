@@ -6,33 +6,38 @@ import { CreateUsuarioDto, UpdateUsuarioDto } from '../dto/usuario.dto';
 export class UsuarioController {
 
     constructor(
-        private readonly tipoDocService: UsuarioServiceImpl
+        private readonly usuarioService: UsuarioServiceImpl
     ) {
     }
 
     @Get()
     getAllUsuario() {
-        return this.tipoDocService.getAllUsuario();
+        return this.usuarioService.getAllUsuario();
+    }
+
+    @Get('/rol/:id')
+    getUsuariosByRolId(@Param('id') id: number) {
+        return this.usuarioService.getUsuariosByRolId(+id);
     }
 
     @Get(':id')
     getUsuarioById(@Param('id') id: number) {
-        return this.tipoDocService.getUsuarioById(+id);
+        return this.usuarioService.getUsuarioById(+id);
     }
 
     @Post()
     create(@Body() createUsuarioDto: CreateUsuarioDto) {
-        return this.tipoDocService.createUsuario(createUsuarioDto);
+        return this.usuarioService.createUsuario(createUsuarioDto);
     }
 
     @Put(':id')
     update(@Param('id') id: number, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-        return this.tipoDocService.updateUsuario(+id, updateUsuarioDto);
+        return this.usuarioService.updateUsuario(+id, updateUsuarioDto);
     }
 
     @Patch('/delete/:id')
     delete(@Param('id') id: number) {
-        return this.tipoDocService.deleteUsuario(+id);
+        return this.usuarioService.deleteUsuario(+id);
     }
     
 }

@@ -196,5 +196,18 @@ export class PracticaServiceImpl implements PracticaService {
         };
 
     }
+
+    async updateHorasAndNotaPractica(id: number, horas: number, nota: number): Promise<UpdateResult> {
+        const updateResult = await this.practicaRepository.update(id, { 
+            horas_validadas: horas,
+            nota: nota
+        });
+
+        if (updateResult.affected === 0) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return updateResult;
+    }
     
 }

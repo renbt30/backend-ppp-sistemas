@@ -9,6 +9,7 @@ export class AuthController {
     ) {
     }
 
+    
     @Post('login')
     login(@Body() dataLogin: { usuario: string, clave: string }) {
         return this.authService.login(dataLogin.usuario, dataLogin.clave);

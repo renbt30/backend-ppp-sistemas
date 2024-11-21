@@ -5,6 +5,7 @@ import { UpdateResult } from "typeorm";
 export interface UsuarioService {
     getAllUsuario(): Promise<Usuario[]>;
     getUsuarioById(id: number): Promise<Usuario>;
+    getUsuariosByRolId(id: number): Promise<Usuario[]>;
     createUsuario(createUsuarioDto: CreateUsuarioDto): Promise<Usuario>;
     updateUsuario(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<UpdateResult>;
     deleteUsuario(id: number): Promise<UpdateResult>;

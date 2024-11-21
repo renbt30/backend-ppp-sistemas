@@ -34,6 +34,20 @@ export class UsuarioServiceImpl implements UsuarioService {
         return usuario;
     }
 
+    async getUsuariosByRolId(id: number): Promise<Usuario[]> {
+        const usuario = await this.usuarioRepository.find({
+            where: [{
+                id_rol: id
+            }]
+        });
+
+        if (!usuario) {
+            throw new BadRequestException(`No se encontraron usuarios`);
+        }
+
+        return usuario;
+    }
+
     async createUsuario(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
 
         const isUserExist = await this.validarUsuario(createUsuarioDto.num_doc, createUsuarioDto.correo, createUsuarioDto.usuario);

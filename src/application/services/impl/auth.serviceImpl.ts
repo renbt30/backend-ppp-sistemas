@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
-class Tokens {
+export class Tokens {
     access_token: string;
     refresh_token: string;
     message?: string; // Opcional
