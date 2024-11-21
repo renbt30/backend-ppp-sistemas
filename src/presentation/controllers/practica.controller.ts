@@ -15,6 +15,11 @@ export class PracticaController {
         return this.practicaService.getAllPractica();
     }
 
+    @Get('/metricas')
+    getMetricas() {
+        return this.practicaService.getMetricas();
+    }
+
     @Get(':id')
     getPracticaById(@Param('id') id: number) {
         return this.practicaService.getPracticaById(+id);
@@ -32,13 +37,8 @@ export class PracticaController {
 
     @Get('/estado/:estado')
     getPracticasByEstado(@Param('estado') estado: string) {
-        return this.practicaService.getPracticasByEstado(estado);
-    }
-
-    @Get('/metric')
-    getMetricas() {
         console.log('Holaaaa');
-        return this.practicaService.getMetricas();
+        return this.practicaService.getPracticasByEstado(estado);
     }
 
     @Post()

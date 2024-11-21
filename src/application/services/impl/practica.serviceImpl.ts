@@ -173,18 +173,30 @@ export class PracticaServiceImpl implements PracticaService {
 
         console.log('Holaaaaaa')
 
-        const result = await this.practicaRepository.query(
-            `CALL GetMetricas();`
-        );
+        // Llamar al procedimiento almacenado
+        const result = await this.practicaRepository.query(`
+            CALL GetMetricas(@numero_solicitudes, @numero_practicantes, @numero_practicas_terminadas);
+        `);
 
+        // Obtener las variables de salida
+        const output = await this.practicaRepository.query(`
+            SELECT 
+                @numero_solicitudes AS numero_solicitudes, 
+                @numero_practicantes AS numero_practicantes, 
+                @numero_practicas_terminadas AS numero_practicas_terminadas;
+        `);
 
-        if (!result || result.length === 0) {
-            throw new BadRequestException(`No se encontró la practica`);
+        if (!output || output.length === 0) {
+            throw new BadRequestException('No se encontraron métricas');
         }
 
-        console.log(result);
+        // Retornar el resultado como objeto
+        return {
+            numeroSolicitudes: output[0].numero_solicitudes,
+            numeroPracticantes: output[0].numero_practicantes,
+            numeroPracticasTerminadas: output[0].numero_practicas_terminadas,
+        };
 
-        return result[0][0];
     }
     
 }
