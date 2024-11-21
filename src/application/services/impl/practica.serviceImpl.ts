@@ -209,5 +209,15 @@ export class PracticaServiceImpl implements PracticaService {
 
         return updateResult;
     }
+
+    async updateIdSupervisor(id_practica: number, id_superv: number): Promise<UpdateResult> {
+        const updateResult = await this.practicaRepository.update(id_practica, { id_superv: id_superv });
+
+        if (updateResult.affected === 0) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return updateResult;
+    }
     
 }

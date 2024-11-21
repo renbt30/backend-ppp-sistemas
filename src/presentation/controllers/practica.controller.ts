@@ -64,4 +64,9 @@ export class PracticaController {
     updateHorasAndNotaPractica(@Body('id_practica') id: number, @Body('horas') horas: number, @Body('nota') nota: number) {
         return this.practicaService.updateHorasAndNotaPractica(id, horas, nota);
     }
+
+    @Patch('/add-supervisor')
+    updateIdSupervisor(@Body('id_practica') id_practica: number, @Body('id_supervisor') id_superv: number) {
+        return this.practicaService.updateIdSupervisor(id_practica, id_superv);
+    }
 }

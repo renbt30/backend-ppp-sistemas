@@ -39,6 +39,8 @@ export class PracticaDocumentosController {
 
     @Patch('/update-estado')
     updateEstado(@Body('id_practica_doc') id: number, @Body('estado_practica_doc') estado: string) {
+        console.log(id);
+        console.log(estado);
         return this.practicaDocumentosService.updateEstadoDocumento(id, estado);
     }
 

@@ -51,7 +51,7 @@ export class SolicitudServiceImpl implements SolicitudService {
                         'correo', sc.correo,
                         'tipo_contacto', st.nm_tipocontacto
                     )
-                ) AS contactos
+                ) AS contactos,
             FROM solicitud s
             INNER JOIN practica_linea pl ON pl.id_prclinea = s.id_prclinea
             INNER JOIN solicitud_contacto sc ON sc.id_solicitud = s.id_solicitud
@@ -88,12 +88,14 @@ export class SolicitudServiceImpl implements SolicitudService {
                         'correo', sc.correo,
                         'tipo_contacto', st.nm_tipocontacto
                     )
-                ) AS contactos
+                ) AS contactos,
+                p.id_practica
             FROM solicitud s
             INNER JOIN practica_linea pl ON pl.id_prclinea = s.id_prclinea
             INNER JOIN solicitud_contacto sc ON sc.id_solicitud = s.id_solicitud
             INNER JOIN solicitud_tipocontacto st ON st.id_tipocontacto = sc.id_tipocontacto
             INNER JOIN usuario u on u.id_usuario = s.id_postulante
+            INNER JOIN practica p on p.id_solicitud = s.id_solicitud
             WHERE s.estado = ?
             GROUP BY s.id_solicitud;`,
             [estado]
