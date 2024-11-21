@@ -30,6 +30,11 @@ export class PracticaController {
         return this.practicaService.getPracticasByPostulanteId(+id);
     }
 
+    @Get('/solicitud/:id')
+    getPracticaBySolicitudId(@Param('id') id: number) {
+        return this.practicaService.getPracticaBySolicitudId(+id);
+    }
+
     @Get('/detalle/:id')
     getDetallePracticaByPracticaId(@Param('id') id: number) {
         return this.practicaService.getDetallePracticaByPracticaId(+id);

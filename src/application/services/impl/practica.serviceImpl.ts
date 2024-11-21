@@ -33,6 +33,20 @@ export class PracticaServiceImpl implements PracticaService {
         return practica;
     }
 
+    async getPracticaBySolicitudId(id: number): Promise<Practica> {
+        const practica = await this.practicaRepository.findOne({
+            where: [{
+                id_solicitud: id
+            }]
+        });
+
+        if (!practica) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return practica;
+    }
+
     /*
     async getPracticasByPostulantes(): Promise<Object[]> {
         const result = await this.practicaRepository.query(
