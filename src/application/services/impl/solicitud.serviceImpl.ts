@@ -36,17 +36,28 @@ export class SolicitudServiceImpl implements SolicitudService {
     async getSolicitudByPostulanteId(id: number): Promise<Object[]> {
         
         const result = await this.solicitudRepository.query(
-            `Select s.*,
-	        pl.nm_prclinea,
-            CASE s.estado
-                WHEN 0 THEN 'Solicitud registrada'
-                WHEN 1 THEN 'Solicitud validada'
-                WHEN 2 THEN 'Solicitud rechazada'
-            END AS estado_solicitud
-            from solicitud s
-            inner join practica_linea pl on pl.id_prclinea = s.id_prclinea
-            inner join usuario u on u.id_usuario = s.id_postulante
-            where id_postulante = ?;`,
+            `SELECT 
+                s.*,
+                pl.nm_prclinea,
+                CASE s.estado
+                    WHEN 0 THEN 'Solicitud registrada'
+                    WHEN 1 THEN 'Solicitud validada'
+                    WHEN 2 THEN 'Solicitud rechazada'
+                END AS estado_solicitud,
+                JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'nombre', sc.nombre,
+                        'celular', sc.celular,
+                        'correo', sc.correo,
+                        'tipo_contacto', st.nm_tipocontacto
+                    )
+                ) AS contactos
+            FROM solicitud s
+            INNER JOIN practica_linea pl ON pl.id_prclinea = s.id_prclinea
+            INNER JOIN solicitud_contacto sc ON sc.id_solicitud = s.id_solicitud
+            INNER JOIN solicitud_tipocontacto st ON st.id_tipocontacto = sc.id_tipocontacto
+            WHERE s.id_postulante = ?
+            GROUP BY s.id_solicitud;`,
             [id]
         );
 
@@ -60,19 +71,31 @@ export class SolicitudServiceImpl implements SolicitudService {
     async getSolicitudByEstado(estado: string): Promise<Object[]> {
         
         const result = await this.solicitudRepository.query(
-            `Select s.*,
+            `SELECT 
+		        s.*,
                 pl.nm_prclinea,
-                u.nombre,
-                u.correo,
-            CASE s.estado
-                WHEN 0 THEN 'Solicitud registrada'
-                WHEN 1 THEN 'Solicitud validada'
-                WHEN 2 THEN 'Solicitud rechazada'
-            END AS estado_solicitud
-            from solicitud s
-            inner join practica_linea pl on pl.id_prclinea = s.id_prclinea
-            inner join usuario u on u.id_usuario = s.id_postulante
-            where s.estado = ?;`,
+				   u.nombre,
+				   u.correo,
+                CASE s.estado
+                    WHEN 0 THEN 'Solicitud registrada'
+                    WHEN 1 THEN 'Solicitud validada'
+                    WHEN 2 THEN 'Solicitud rechazada'
+                END AS estado_solicitud,
+                JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'nombre', sc.nombre,
+                        'celular', sc.celular,
+                        'correo', sc.correo,
+                        'tipo_contacto', st.nm_tipocontacto
+                    )
+                ) AS contactos
+            FROM solicitud s
+            INNER JOIN practica_linea pl ON pl.id_prclinea = s.id_prclinea
+            INNER JOIN solicitud_contacto sc ON sc.id_solicitud = s.id_solicitud
+            INNER JOIN solicitud_tipocontacto st ON st.id_tipocontacto = sc.id_tipocontacto
+            INNER JOIN usuario u on u.id_usuario = s.id_postulante
+            WHERE s.estado = ?
+            GROUP BY s.id_solicitud;`,
             [estado]
         );
 
