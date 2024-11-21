@@ -88,7 +88,7 @@ export class SolicitudServiceImpl implements SolicitudService {
                         'correo', sc.correo,
                         'tipo_contacto', st.nm_tipocontacto
                     )
-                ) AS contactos,
+                ) AS contactos
             FROM solicitud s
             INNER JOIN practica_linea pl ON pl.id_prclinea = s.id_prclinea
             INNER JOIN solicitud_contacto sc ON sc.id_solicitud = s.id_solicitud
