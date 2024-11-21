@@ -33,16 +33,16 @@ export class SolicitudServiceImpl implements SolicitudService {
         return solicitud;
     }
 
-    async getSolicitudByPostulanteId(id: number): Promise<Object[]> {
+    async getSolicitudesByPostulanteId(id: number): Promise<Object[]> {
         
         const result = await this.solicitudRepository.query(
             `SELECT 
                 s.*,
                 pl.nm_prclinea,
                 CASE s.estado
-                    WHEN 0 THEN 'Solicitud registrada'
-                    WHEN 1 THEN 'Solicitud validada'
-                    WHEN 2 THEN 'Solicitud rechazada'
+                    WHEN 0 THEN 'Registrado'
+                    WHEN 1 THEN 'Validado'
+                    WHEN 2 THEN 'Rechazado'
                 END AS estado_solicitud,
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
@@ -68,7 +68,7 @@ export class SolicitudServiceImpl implements SolicitudService {
         return result;
     }
 
-    async getSolicitudByEstado(estado: string): Promise<Object[]> {
+    async getSolicitudesByEstado(estado: string): Promise<Object[]> {
         
         const result = await this.solicitudRepository.query(
             `SELECT 
@@ -77,9 +77,9 @@ export class SolicitudServiceImpl implements SolicitudService {
 				   u.nombre,
 				   u.correo,
                 CASE s.estado
-                    WHEN 0 THEN 'Solicitud registrada'
-                    WHEN 1 THEN 'Solicitud validada'
-                    WHEN 2 THEN 'Solicitud rechazada'
+                    WHEN 0 THEN 'Registrado'
+                    WHEN 1 THEN 'Validado'
+                    WHEN 2 THEN 'Rechazado'
                 END AS estado_solicitud,
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
@@ -101,6 +101,33 @@ export class SolicitudServiceImpl implements SolicitudService {
 
         if (!result) {
             throw new BadRequestException(`No se encontraron solicitudes`);
+        }
+
+        return result;
+    }
+
+    async getSolicitudesBySolicitudEstadoAndPracticaEstado(estado_solicitud: string, estado_practica: string): Promise<Object[]> {
+        const result = await this.solicitudRepository.query(
+            `Select s.*,
+                pl.nm_prclinea,
+                u.nombre,
+                u.correo,
+                u.usuario,
+            CASE s.estado
+                WHEN 0 THEN 'Registrado'
+                WHEN 1 THEN 'Validado'
+                WHEN 2 THEN 'Rechazado'
+            END AS estado_solicitud
+            from solicitud s
+            inner join practica_linea pl on pl.id_prclinea = s.id_prclinea
+            inner join usuario u on u.id_usuario = s.id_postulante
+            inner join practica p on p.id_practica = s.id_solicitud
+            where s.estado = ? AND p.id_prcestado = ?;`,
+            [estado_solicitud, estado_practica]
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontró la practica`);
         }
 
         return result;

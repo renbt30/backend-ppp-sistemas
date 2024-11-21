@@ -5,8 +5,9 @@ import { UpdateResult } from "typeorm";
 export interface SolicitudService {
     getAllSolicitud(): Promise<Solicitud[]>;
     getSolicitudById(id: number): Promise<Solicitud>;
-    getSolicitudByPostulanteId(id: number): Promise<Object[]>;
-    getSolicitudByEstado(estado: string): Promise<Object[]>
+    getSolicitudesByPostulanteId(id: number): Promise<Object[]>;
+    getSolicitudesByEstado(estado: string): Promise<Object[]>;
+    getSolicitudesBySolicitudEstadoAndPracticaEstado(estado_solicitud: string, estado_practica: string): Promise<Object[]>;
     createSolicitud(createSolicitudDto: CreateSolicitudDto): Promise<Solicitud>;
     updateSolicitud(id: number, updateSolicitudDto: UpdateSolicitudDto): Promise<UpdateResult>;
     deleteSolicitud(id: number): Promise<UpdateResult>;

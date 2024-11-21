@@ -98,7 +98,7 @@ export class PracticaServiceImpl implements PracticaService {
 
     async getPracticasByEstado(estado: string): Promise<Object[]> {
         const result = await this.practicaRepository.query(
-            `Select p.*, pl.nm_prclinea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica, u.nombre as postulante
+            `Select p.*, pl.nm_prclinea as linea, us.nombre as supervisor, pe.nm_prcestado AS estado_practica, u.nombre as postulante
                 from practica p
                 inner join solicitud s on s.id_solicitud = p.id_solicitud
                 inner join usuario u on s.id_postulante = u.id_usuario

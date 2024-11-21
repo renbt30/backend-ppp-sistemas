@@ -21,13 +21,18 @@ export class SolicitudController {
     }
 
     @Get('/postulante/:id')
-    getSolicitudByPostulanteId(@Param('id') id: number) {
-        return this.solicitudService.getSolicitudByPostulanteId(+id);
+    getSolicitudesByPostulanteId(@Param('id') id: number) {
+        return this.solicitudService.getSolicitudesByPostulanteId(+id);
     }
 
     @Get('/estado/:estado')
-    getSolicitudByEstado(@Param('estado') estado: string) {
-        return this.solicitudService.getSolicitudByEstado(estado);
+    getSolicitudesByEstado(@Param('estado') estado: string) {
+        return this.solicitudService.getSolicitudesByEstado(estado);
+    }
+
+    @Get('/solicitud-estado/:estado_solicitud/practica-estado/:estado_practica')
+    getSolicitudesBySolicitudEstadoAndPracticaEstado(@Param('estado_solicitud') estado_solicitud: string, @Param('estado_practica') estado_practica: string) {
+        return this.solicitudService.getSolicitudesBySolicitudEstadoAndPracticaEstado(estado_solicitud, estado_practica);
     }
 
     @Post()
