@@ -14,7 +14,9 @@ export class FirebaseStorageService {
   async uploadFile(file: Express.Multer.File): Promise<{ fileName: string, fileLink: string }> {
     
     const uuid = uuidv4();
-    const fileName = `${Date.now()}_${file.originalname}`;
+    const sanitizedFileName = file.originalname.replace(/\s+/g, '_');
+
+    const fileName = `${Date.now()}_${sanitizedFileName}`;
     const fileUpload = this.bucket.file(fileName);
     const fileLink = `https://firebasestorage.googleapis.com/v0/b/${this.bucket.name}/o/${fileUpload.name}?alt=media&token=${uuid}`
 

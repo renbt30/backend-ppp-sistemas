@@ -117,7 +117,8 @@ export class SolicitudServiceImpl implements SolicitudService {
                 WHEN 0 THEN 'Registrado'
                 WHEN 1 THEN 'Validado'
                 WHEN 2 THEN 'Rechazado'
-            END AS estado_solicitud
+            END AS estado_solicitud,
+                p.id_practica
             from solicitud s
             inner join practica_linea pl on pl.id_prclinea = s.id_prclinea
             inner join usuario u on u.id_usuario = s.id_postulante
