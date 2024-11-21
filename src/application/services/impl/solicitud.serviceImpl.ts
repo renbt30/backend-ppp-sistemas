@@ -33,6 +33,56 @@ export class SolicitudServiceImpl implements SolicitudService {
         return solicitud;
     }
 
+    async getSolicitudByPostulanteId(id: number): Promise<Object[]> {
+        
+        const result = await this.solicitudRepository.query(
+            `Select s.*,
+	        pl.nm_prclinea,
+            CASE s.estado
+                WHEN 0 THEN 'Solicitud registrada'
+                WHEN 1 THEN 'Solicitud validada'
+                WHEN 2 THEN 'Solicitud rechazada'
+            END AS estado_solicitud
+            from solicitud s
+            inner join practica_linea pl on pl.id_prclinea = s.id_prclinea
+            inner join usuario u on u.id_usuario = s.id_postulante
+            where id_postulante = ?;`,
+            [id]
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontraron solicitudes`);
+        }
+
+        return result;
+    }
+
+    async getSolicitudByEstado(estado: string): Promise<Object[]> {
+        
+        const result = await this.solicitudRepository.query(
+            `Select s.*,
+                pl.nm_prclinea,
+                u.nombre,
+                u.correo,
+            CASE s.estado
+                WHEN 0 THEN 'Solicitud registrada'
+                WHEN 1 THEN 'Solicitud validada'
+                WHEN 2 THEN 'Solicitud rechazada'
+            END AS estado_solicitud
+            from solicitud s
+            inner join practica_linea pl on pl.id_prclinea = s.id_prclinea
+            inner join usuario u on u.id_usuario = s.id_postulante
+            where s.estado = ?;`,
+            [estado]
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontraron solicitudes`);
+        }
+
+        return result;
+    }
+
     async createSolicitud(createSolicitudDto: CreateSolicitudDto): Promise<Solicitud> {
         const solicitud = await this.solicitudRepository.save({
             ...createSolicitudDto,

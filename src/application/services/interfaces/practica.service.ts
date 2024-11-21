@@ -5,6 +5,8 @@ import { UpdateResult } from "typeorm";
 export interface PracticaService {
     getAllPractica(): Promise<Practica[]>;
     getPracticaById(id: number): Promise<Practica>;
+    getPracticaByPostulantes(): Promise<Object[]>;
+    getPracticaByPostulanteId(id: number): Promise<Object[]>;
     createPractica(createPracticaDto: CreatePracticaDto): Promise<Practica>;
     updatePractica(id: number, updatePracticaDto: UpdatePracticaDto): Promise<UpdateResult>;
     deletePractica(id: number): Promise<UpdateResult>;

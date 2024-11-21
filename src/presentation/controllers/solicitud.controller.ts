@@ -20,6 +20,16 @@ export class SolicitudController {
         return this.solicitudService.getSolicitudById(+id);
     }
 
+    @Get('/postulante/:id')
+    getSolicitudByPostulanteId(@Param('id') id: number) {
+        return this.solicitudService.getSolicitudByPostulanteId(+id);
+    }
+
+    @Get('/estado/:estado')
+    getSolicitudByEstado(@Param('estado') estado: string) {
+        return this.solicitudService.getSolicitudByEstado(estado);
+    }
+
     @Post()
     create(@Body() createSolicitudDto: CreateSolicitudDto) {
         return this.solicitudService.createSolicitud(createSolicitudDto);

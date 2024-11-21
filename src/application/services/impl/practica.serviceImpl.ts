@@ -33,6 +33,40 @@ export class PracticaServiceImpl implements PracticaService {
         return practica;
     }
 
+    async getPracticaByPostulantes(): Promise<Object[]> {
+        const result = await this.practicaRepository.query(
+            `Select p.*, pe.nm_prcestado AS estado_practica, u.nombre
+            from practica p
+            inner join solicitud s on s.id_solicitud = p.id_solicitud
+            inner join usuario u on s.id_postulante = u.id_usuario
+            inner join practica_estado pe on pe.id_prcestado = p.id_prcestado;`,
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontraron practicas`);
+        }
+
+        return result;
+    }
+
+    async getPracticaByPostulanteId(id: number): Promise<Object[]> {
+        const result = await this.practicaRepository.query(
+            `Select p.*, pe.nm_prcestado AS estado_practica, u.nombre
+            from practica p
+            inner join solicitud s on s.id_solicitud = p.id_solicitud
+            inner join usuario u on s.id_postulante = u.id_usuario
+            inner join practica_estado pe on pe.id_prcestado = p.id_prcestado
+            where s.id_postulante = ?;`,
+            [id]
+        );
+
+        if (!result) {
+            throw new BadRequestException(`No se encontró la practica`);
+        }
+
+        return result;
+    }
+
     async createPractica(createPracticaDto: CreatePracticaDto): Promise<Practica> {
         const practica = await this.practicaRepository.save({
             ...createPracticaDto,
