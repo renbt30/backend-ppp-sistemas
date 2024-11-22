@@ -4,13 +4,19 @@ import { Repository, UpdateResult } from 'typeorm';
 import { SolicitudService } from '../interfaces/solicitud.service';
 import { Solicitud } from 'src/domain/entities/solicitud';
 import { CreateSolicitudDto, UpdateSolicitudDto } from 'src/presentation/dto/solicitud.dto';
+import { Practica } from 'src/domain/entities/practica';
+import { PracticaDocumentos } from 'src/domain/entities/practica_documentos';
 
 @Injectable()
 export class SolicitudServiceImpl implements SolicitudService {
 
     constructor(
         @InjectRepository(Solicitud)
-        private readonly solicitudRepository: Repository<Solicitud>
+        private readonly solicitudRepository: Repository<Solicitud>,
+        @InjectRepository(Practica)
+        private readonly practicaRepository: Repository<Practica>,
+        @InjectRepository(PracticaDocumentos)
+        private readonly practicaDocumentosRepository: Repository<PracticaDocumentos>
     ) {
     
     }
@@ -141,7 +147,30 @@ export class SolicitudServiceImpl implements SolicitudService {
             estado: '0',
         })
 
+        await this.createPractica(solicitud.id_solicitud, solicitud.id_prclinea);
+
         return solicitud;
+    }
+
+    async createPractica(id_solicitud: number, id_prclinea: number): Promise<void> {
+        const practica = await this.practicaRepository.save({
+            id_solicitud: id_solicitud,
+            id_prclinea: id_prclinea,
+            id_prcestado: 1,
+            horas_validadas: 0,
+            nota: 0,
+            id_usuariomov: 2,
+            id_superv: 7,
+            dt_mov: new Date()
+        })
+
+        await this.createRequisitosParaSubir(practica.id_practica, 1)
+        await this.createRequisitosParaSubir(practica.id_practica, 2)
+        await this.createRequisitosParaSubir(practica.id_practica, 3)
+        await this.createRequisitosParaSubir(practica.id_practica, 4)
+        await this.createRequisitosParaSubir(practica.id_practica, 5)
+        await this.createRequisitosParaSubir(practica.id_practica, 6)
+        await this.createRequisitosParaSubir(practica.id_practica, 7)
     }
 
     async updateSolicitud(id: number, updateSolicitudDto: UpdateSolicitudDto): Promise<UpdateResult> {
@@ -152,6 +181,17 @@ export class SolicitudServiceImpl implements SolicitudService {
         }
 
         return updateResult;
+    }
+
+    async createRequisitosParaSubir(id_practica: number, id_prctipodoc: number): Promise<void> {
+
+        const practicaDocumentos = await this.practicaDocumentosRepository.save({
+            id_practica: id_practica,
+            id_prctipodoc: id_prctipodoc,
+            estado: '0',
+            id_usuariorev: 2
+        })
+        
     }
 
     async deleteSolicitud(id: number): Promise<UpdateResult> {
@@ -172,6 +212,18 @@ export class SolicitudServiceImpl implements SolicitudService {
         if (updateResult.affected === 0) {
             throw new BadRequestException(`No se encontró la solicitud`);
         }
+
+        /*
+        const solicitud = await this.solicitudRepository.findOne({
+            where: [{
+                id_solicitud: id
+            }]
+        });
+
+        if (estado == '1') {
+            await this.createPractica(id, solicitud.id_prclinea);
+        }
+        */
 
         return updateResult;
     }

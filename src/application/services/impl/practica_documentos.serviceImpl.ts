@@ -40,7 +40,6 @@ export class PracticaDocumentosServiceImpl implements PracticaDocumentosService 
         const { fileName, fileLink } = await this.fireStorageService.uploadFile(file);
 
         const practicaDocumentos = await this.practicaDocumentosRepository.save({
-            ...createPracticaDocumentosDto,
             file_name: fileName,
             file_link: fileLink,
             estado: '1',

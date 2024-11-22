@@ -27,6 +27,13 @@ export class PracticaDocumentosController {
         return await this.practicaDocumentosService.createPracticaDocumentos(createPracticaDocumentosDto, file);
     }
 
+    /*
+    @Post()
+    async createRequisitosParaSubir(@Body() id_practica: number, @Body() id_prctipodoc: number) {
+        return await this.practicaDocumentosService.createRequisitosParaSubir(id_practica, id_prctipodoc);
+    }
+    */
+
     @Put(':id')
     update(@Param('id') id: number, @Body() updatePracticaDocumentosDto: UpdatePracticaDocumentosDto) {
         return this.practicaDocumentosService.updatePracticaDocumentos(+id, updatePracticaDocumentosDto);

@@ -4,13 +4,14 @@ import { Repository, UpdateResult } from 'typeorm';
 import { PracticaService } from '../interfaces/practica.service';
 import { Practica } from 'src/domain/entities/practica';
 import { CreatePracticaDto, UpdatePracticaDto } from 'src/presentation/dto/practica.dto';
+import { PracticaDocumentos } from 'src/domain/entities/practica_documentos';
 
 @Injectable()
 export class PracticaServiceImpl implements PracticaService {
 
     constructor(
         @InjectRepository(Practica)
-        private readonly practicaRepository: Repository<Practica>,
+        private readonly practicaRepository: Repository<Practica>
     ) {
     
     }
@@ -175,6 +176,10 @@ export class PracticaServiceImpl implements PracticaService {
 
     async updateEstadoPractica(id: number, estado: number): Promise<UpdateResult> {
         const updateResult = await this.practicaRepository.update(id, { id_prcestado: estado });
+
+        if (estado == 1) {
+            
+        }
 
         if (updateResult.affected === 0) {
             throw new BadRequestException(`No se encontró la practica`);
